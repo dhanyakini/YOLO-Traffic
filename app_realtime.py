@@ -51,7 +51,9 @@ def get_livestream_url(youtube_url):
 
 youtube_urls = [
         "https://www.youtube.com/watch?v=6dp-bvQ7RWo",
-        "https://www.youtube.com/watch?v=B0YjuKbVZ5w"
+        "https://www.youtube.com/watch?v=B0YjuKbVZ5w",
+        "https://www.youtube.com/watch?v=_fDYKDeZC9c",
+        "https://www.youtube.com/watch?v=rnXIjl_Rzy4"
     ]
 
 # preprocessor = ColumnTransformer(
@@ -86,7 +88,7 @@ def predictions(avg_count):
     # })
     return df
 
-
+# Processing video frames
 def generate_frames(stream_url):
     global vehicle_counts, predicted_output, model_yolo, model_predict
     global last_reset_time
@@ -94,14 +96,15 @@ def generate_frames(stream_url):
     cap = cv2.VideoCapture(stream_url)
     tracker = Tracker()
     
-    # Initialize counters and trackers
+    # thresholds and offset
     
     cy1 = 200
     cy2 = 300
     offset = 6
+    
     with open("yolov8/coco.txt", "r") as my_file:
         class_list = my_file.read().split("\n")
-
+    #looping through frames
     while True:
         count = 0
         car_count = 0
@@ -122,6 +125,7 @@ def generate_frames(stream_url):
         # Initialize a list to store bounding boxes for each vehicle type
         cars, buses, trucks = [], [], []
 
+        # couting vehicles
         # Iterate over the detection results and categorize them into cars, buses, or trucks
         for index, row in px.iterrows():
             x1 = int(row[0])
@@ -253,7 +257,7 @@ def index():
             },
         )
 
-        # Add a line trace for Shinjuku
+        # Add a line trace for Shinjukugado-W, Tokya, Japan
         line_data = pd.DataFrame({
             'lat': [35.6941, 35.6932],
             'lon': [139.6989, 139.6992],
@@ -265,7 +269,7 @@ def index():
             mode='lines+markers',
             marker=go.scattermapbox.Marker(size=8, color='red'),
             line=dict(width=4, color='blue'),
-            name='Shinjukugado-W'
+            name='Shinjukugado-W, Tokya, Japan'
         ))
 
         fig.update_layout(
@@ -282,7 +286,7 @@ def index():
         )
 
 
-    else:
+    elif video_index == 1:
         fig = px.choropleth_mapbox(
             df,
             geojson=geojson_data,
@@ -303,7 +307,7 @@ def index():
             },
         )
 
-        # Add line trace for Colorado
+        # Add line trace for Colorado Mountain College, USA
         line_data = pd.DataFrame({
             'lat': [39.5482, 39.5468],
             'lon': [-107.3247, -107.3247],
@@ -315,7 +319,7 @@ def index():
             mode='lines+markers',
             marker=go.scattermapbox.Marker(size=8, color='red'),
             line=dict(width=4, color='blue'),
-            name='Colorado'
+            name='Colorado Mountain College, USA'
         ))
 
         fig.update_layout(
@@ -330,6 +334,103 @@ def index():
                 borderwidth=1
             )
         )
+    elif video_index == 2:
+        fig = px.choropleth_mapbox(
+            df,
+            geojson=geojson_data,
+            locations='name',
+            color='name',
+            mapbox_style='open-street-map',
+            zoom=15,
+            center={"lat": 41.6933, "lon": 44.8015},
+            opacity=0.5,
+            labels={'name': 'Traffic Situation'},
+            width=750,
+            height=560,
+            color_discrete_map={
+                "Heavy": "red",
+                "High": "green",
+                "Low": "blue",
+                'Normal': 'yellow'
+            },
+        )
+
+        # Add a line trace for Tbilisi Freedom Square, Georgia
+        line_data = pd.DataFrame({
+            'lat': [41.6929, 41.6939],
+            'lon': [44.8012, 44.8020],
+            'name': ['Start', 'End']
+        })
+        fig.add_trace(go.Scattermapbox(
+            lat=line_data['lat'],
+            lon=line_data['lon'],
+            mode='lines+markers',
+            marker=go.scattermapbox.Marker(size=8, color='red'),
+            line=dict(width=4, color='blue'),
+            name='Tbilisi Freedom Square, Georgia'
+        ))
+
+        fig.update_layout(
+            margin={"r":0,"t":0,"l":0,"b":0},
+            legend=dict(
+                x=0.98,
+                y=0.98,
+                xanchor="right",
+                yanchor="top",
+                bgcolor="rgba(255,255,255,0.8)",  # Background color with some transparency
+                bordercolor="black",
+                borderwidth=1
+            )
+        )
+    else:
+        fig = px.choropleth_mapbox(
+            df,
+            geojson=geojson_data,
+            locations='name',
+            color='name',
+            mapbox_style='open-street-map',
+            zoom=15,
+            center={"lat": 40.7579, "lon": -73.9855},
+            opacity=0.5,
+            labels={'name': 'Traffic Situation'},
+            width=750,
+            height=560,
+            color_discrete_map={
+                "Heavy": "red",
+                "High": "green",
+                "Low": "blue",
+                'Normal': 'yellow'
+            },
+        )
+
+        # Add a line trace for Times square, New York, USA
+        line_data = pd.DataFrame({
+            'lat': [40.7575, 40.7584],
+            'lon': [-73.9858, -73.9852],
+            'name': ['Start', 'End']
+        })
+        fig.add_trace(go.Scattermapbox(
+            lat=line_data['lat'],
+            lon=line_data['lon'],
+            mode='lines+markers',
+            marker=go.scattermapbox.Marker(size=8, color='red'),
+            line=dict(width=4, color='blue'),
+            name='Times square, New York, USA'
+        ))
+
+        fig.update_layout(
+            margin={"r":0,"t":0,"l":0,"b":0},
+            legend=dict(
+                x=0.98,
+                y=0.98,
+                xanchor="right",
+                yanchor="top",
+                bgcolor="rgba(255,255,255,0.8)",  # Background color with some transparency
+                bordercolor="black",
+                borderwidth=1
+            )
+        )
+
 
     color_map = {0: 'red', 1: 'green', 2: 'blue', 3: 'yellow'}
     print(predicted_output)

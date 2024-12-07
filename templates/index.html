@@ -8,10 +8,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://www.eclipticenterprises.com/wp-content/uploads/2024/03/earth-observation-1024x576.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+            background-color: white; /* Set background color to white */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
         }
         
         .main-container {
@@ -43,52 +42,52 @@
             max-width: 50%;
             text-align: center;
         }
-
+    
         .no-data {
             color: red;
         }
-
+    
         .form-input {
             display: flex;
             flex-direction: column;
         }
-
+    
         .form-input label,
         .form-input select,
         .form-input input,
         .form-input button {
             margin: 5px 0;
         }
-
-       .button-container {
-           display: flex;
-           justify-content: center;
-           width: 50%;
-           margin: 0 auto;
-       }
-
-       .button-container button {
-           padding: 15px 30px;
-           font-size: 20px;
-           background-color: #4CAF50;
-           color: white;
-           border: none;
-           border-radius: 5px;
-           cursor: pointer;
-           margin-left: 90px;
-       }
-
-       .button-container button:hover {
-           background-color: #45a049;
-       }
-   </style>
+    
+        .button-container {
+            display: flex;
+            justify-content: center;
+            width: 50%;
+            margin: 0 auto;
+        }
+    
+        .button-container button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 90px;
+        }
+    
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 
-<h1 style="text-align: center; font-size: 50px; color:aliceblue;">VEHICLES FLOW MAP</h1>
+<h1 style="text-align: center; font-size: 50px; color:blue;">VEHICLES FLOW MAP</h1>
 
 <div class="button-container">
-   <a href="{{ url_for('index', video_index=(video_index + 1) % 2) }}" style="margin-top: 35px; margin-left: -80px;">
+   <a href="{{ url_for('index', video_index=(video_index + 1) % 4) }}" style="margin-top: 35px; margin-left: -80px;">
        <button type="button" style="text-align: center;">Change Video</button>
    </a>
 </div>
