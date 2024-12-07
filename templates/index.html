@@ -8,9 +8,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: white; /* Set background color to white */
-            margin: 0; /* Remove default margin */
-            padding: 0; /* Remove default padding */
+            background-color: #e0f7fa; /* Light cyan background for a fresh look */
+            margin: 0;
+            padding: 0;
         }
         
         .main-container {
@@ -19,92 +19,114 @@
             align-items: center;
             margin: 20px;
         }
-        
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            color: #00796b; /* Teal color for the main title */
+        }
+
         .input-container {
             margin-bottom: 20px;
         }
-        
+
         .flex-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the start */
             width: 100%;
         }
-        
-        .graph-container, .video-container {
-            flex: 1;
-        }
-        
+
         .graph-container {
-            max-width: 50%;
+            max-width: 800px; /* Set a fixed width for better layout */
+            margin-top: 20px; /* Space above the graph */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+            background-color: white; /* White background for contrast */
         }
-        
+
         .video-container {
-            max-width: 50%;
+            max-width: 800px; /* Set a fixed width for better layout */
             text-align: center;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+            background-color: white; /* White background for contrast */
         }
-    
+
         .no-data {
             color: red;
         }
-    
+
         .form-input {
             display: flex;
             flex-direction: column;
+            margin-bottom: 20px; /* Space below dropdown */
         }
-    
-        .form-input label,
-        .form-input select,
-        .form-input input,
-        .form-input button {
-            margin: 5px 0;
-        }
-    
-        .button-container {
-            display: flex;
-            justify-content: center;
-            width: 50%;
-            margin: 0 auto;
-        }
-    
-        .button-container button {
-            padding: 15px 30px;
+
+        label {
             font-size: 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 90px;
+            color: #004d40; /* Darker teal for labels */
         }
-    
-        .button-container button:hover {
-            background-color: #45a049;
+
+        select {
+            padding: 10px; /* Padding for dropdown */
+            font-size: 16px; /* Font size for dropdown */
+            border-radius: 5px; /* Rounded corners for dropdown */
+            border: 1px solid #00796b; /* Teal border */
+            transition: border-color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        select:hover {
+            border-color: #004d40; /* Darker teal on hover */
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #555555; /* Gray color for footer text */
         }
     </style>
 </head>
 <body>
 
-<h1 style="text-align: center; font-size: 50px; color:blue;">VEHICLES FLOW MAP</h1>
-
-<div class="button-container">
-   <a href="{{ url_for('index', video_index=(video_index + 1) % 4) }}" style="margin-top: 35px; margin-left: -80px;">
-       <button type="button" style="text-align: center;">Change Video</button>
-   </a>
-</div>
+<h1>VEHICLES FLOW MAP</h1>
 
 <div class="main-container">
-   <div class="flex-container" style="width: 900; height: 500; margin-top: 5px;">
-       <div class="graph-container">
-           <h2 style="text-align: center; font-size: 30px; color:blue; font-weight:bolder;">Choropleth Map</h2>
-           <div style="margin-left: 100px;">{{ graph_html | safe }}</div>
-       </div>
-
-       <div class="video-container">
-           <h3 style="text-align: center; font-size: 30px; color:blue; font-weight:bolder;">Live Stream</h3>
-           <img src="{{ url_for('video_feed') }}" width="750" height="560" style="margin-top: -10px;">
-       </div>
+   <div class="input-container">
+       <label for="videoSelect">Select Location:</label>
+       <select id="videoSelect" onchange="changeVideo()">
+           <option value="0" {% if video_index == 0 %}selected{% endif %}>Shinjukugado-W, Tokyo, Japan</option>
+           <option value="1" {% if video_index == 1 %}selected{% endif %}>Colorado Mountain College, USA</option>
+           <option value="2" {% if video_index == 2 %}selected{% endif %}>Tbilisi Freedom Square, Georgia</option>
+           <option value="3" {% if video_index == 3 %}selected{% endif %}>Times Square, New York, USA</option>
+       </select>
    </div>
+
+   <div class="video-container">
+       <h3 style="font-size: 30px; color:#00796b;">Live Stream</h3>
+       <img src="{{ url_for('video_feed') }}" width="750" height="560" style="margin-top: -10px;">
+   </div>
+
+   <div class="graph-container">
+       <h2 style="text-align: center; font-size: 30px; color:#00796b;">Choropleth Map</h2>
+       <div>{{ graph_html | safe }}</div>
+   </div>
+
+   <div class="footer">
+       <p>This is a final year project by Chaithra, Dhanya P Shetty, Dhanya Kini B, Shreya S<br> Dept of Artificial Intelligence and Machine Learning.</p>
+       <p>Shri Madhwa Vadiraja Institute Of Technology and Management,<br> Udupi, Karnataka, India.</p>
+   </div>
+
 </div>
+
+<script>
+function changeVideo() {
+    const select = document.getElementById('videoSelect');
+    const videoIndex = select.value;
+    window.location.href = `{{ url_for('index', video_index='') }}${videoIndex}`;
+}
+</script>
 
 </body>
 </html>
