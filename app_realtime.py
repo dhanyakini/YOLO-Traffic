@@ -62,7 +62,7 @@ youtube_urls = [
 #     ])
 
 model_yolo = YOLO('yolov8/yolov8s.pt')
-model_predict = load('models/model_svm.joblib')
+model_predict = load('model.joblib')
 stream_url = ''
 vehicle_counts = []
 predicted_output = 0
