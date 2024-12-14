@@ -63,19 +63,19 @@ This project implements a web-based traffic analysis and prediction system using
 ## File Structure
 ```
 .
-├── app_realtime.py               # Main Flask application
+├── app_realtime.py                                     # Main Flask application
 ├── data
-│   └── map.geojson      # GeoJSON file for map visualization
-│   └── Traffic.csv      # Dataset used to train model
-├── model.joblib     # Trained ML model
-├── requirements.txt     # Python dependencies
+│   └── map.geojson                                     # GeoJSON file for map visualization
+│   └── Traffic.csv                                     # Dataset used to train model
+├── model.joblib                                        # Trained ML model
+├── requirements.txt                                    # Python dependencies
 ├── templates
-│   └── index.html       # HTML templates
-├── traffic-prediction-detailed-eda-modeling.ipynb # Jupyter Notebook used to train model
+│   └── index.html                                      # HTML templates
+├── traffic-prediction-detailed-eda-modeling.ipynb      # Jupyter Notebook used to train model
 ├── yolov8
-    ├── coco.txt         # Class labels for YOLO
-    ├── tracker.py       # Tracks Boundary Boxes across frames
-    └── yolov8s.pt       # YOLOv8 model weights
+    ├── coco.txt                                        # Class labels for YOLO
+    ├── tracker.py                                      # Tracks Boundary Boxes across frames
+    └── yolov8s.pt                                      # YOLOv8 model weights
 ```
 
 
