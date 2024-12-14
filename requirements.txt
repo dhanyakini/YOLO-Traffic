@@ -5,3 +5,4 @@ yt-dlp
 flask
 plotly
 pytube
+gunicorn
