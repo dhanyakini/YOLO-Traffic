@@ -6,3 +6,4 @@ flask
 plotly
 pytube
 gunicorn
+opencv-python
