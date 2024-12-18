@@ -89,4 +89,4 @@ This project implements a web-based traffic analysis and prediction system using
 Feel free to fork the repository and submit pull requests. Contributions are welcome!
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
