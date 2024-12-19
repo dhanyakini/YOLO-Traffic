@@ -54,7 +54,9 @@ youtube_urls = [
         "https://www.youtube.com/watch?v=6dp-bvQ7RWo",
         "https://www.youtube.com/watch?v=B0YjuKbVZ5w",
         "https://www.youtube.com/watch?v=_fDYKDeZC9c",
-        "https://www.youtube.com/watch?v=rnXIjl_Rzy4"
+        "https://www.youtube.com/watch?v=rnXIjl_Rzy4",
+        "https://www.youtube.com/watch?v=qjSOvJAeQso",
+        "https://www.youtube.com/watch?v=__S1lZ6t1qg"
     ]
 
 # preprocessor = ColumnTransformer(
@@ -383,7 +385,7 @@ def index():
                 borderwidth=1
             )
         )
-    else:
+    elif video_index == 3:
         fig = px.choropleth_mapbox(
             df,
             geojson=geojson_data,
@@ -431,6 +433,102 @@ def index():
                 borderwidth=1
             )
         )
+    elif video_index == 4:
+        fig = px.choropleth_mapbox(
+            df,
+            geojson=geojson_data,
+            locations='name',
+            color='name',
+            mapbox_style='open-street-map',
+            zoom=15,
+            center={"lat": 33.3313, "lon": -105.6694},
+            opacity=0.5,
+            labels={'name': 'Traffic Situation'},
+            width=750,
+            height=560,
+            color_discrete_map={
+                "Heavy": "red",
+                "High": "green",
+                "Low": "blue",
+                'Normal': 'yellow'
+            },
+        )
+
+        # Add a line trace for Ruidoso, New Mexico, USA
+        line_data = pd.DataFrame({
+            'lat': [33.3314, 33.3312],
+            'lon': [-105.6702, -105.6689],
+            'name': ['Start', 'End']
+        })
+        fig.add_trace(go.Scattermapbox(
+            lat=line_data['lat'],
+            lon=line_data['lon'],
+            mode='lines+markers',
+            marker=go.scattermapbox.Marker(size=8, color='red'),
+            line=dict(width=4, color='blue'),
+            name='Ruidoso, New Mexico, USA'
+        ))
+
+        fig.update_layout(
+            margin={"r":0,"t":0,"l":0,"b":0},
+            legend=dict(
+                x=0.98,
+                y=0.98,
+                xanchor="right",
+                yanchor="top",
+                bgcolor="rgba(255,255,255,0.8)",  # Background color with some transparency
+                bordercolor="black",
+                borderwidth=1
+            )
+        )
+    else:
+        fig = px.choropleth_mapbox(
+            df,
+            geojson=geojson_data,
+            locations='name',
+            color='name',
+            mapbox_style='open-street-map',
+            zoom=15,
+            center={"lat": 33.3973, "lon": -104.5227},
+            opacity=0.5,
+            labels={'name': 'Traffic Situation'},
+            width=750,
+            height=560,
+            color_discrete_map={
+                "Heavy": "red",
+                "High": "green",
+                "Low": "blue",
+                'Normal': 'yellow'
+            },
+        )
+
+        # Add a line trace for Roswell, New Mexico, USA
+        line_data = pd.DataFrame({
+            'lat': [33.3965, 33.3977],
+            'lon': [-104.5227, -104.5227],
+            'name': ['Start', 'End']
+        })
+        fig.add_trace(go.Scattermapbox(
+            lat=line_data['lat'],
+            lon=line_data['lon'],
+            mode='lines+markers',
+            marker=go.scattermapbox.Marker(size=8, color='red'),
+            line=dict(width=4, color='blue'),
+            name='Roswell, New Mexico, USA'
+        ))
+
+        fig.update_layout(
+            margin={"r":0,"t":0,"l":0,"b":0},
+            legend=dict(
+                x=0.98,
+                y=0.98,
+                xanchor="right",
+                yanchor="top",
+                bgcolor="rgba(255,255,255,0.8)",  # Background color with some transparency
+                bordercolor="black",
+                borderwidth=1
+            )
+        )
 
 
     color_map = {0: 'red', 1: 'green', 2: 'blue', 3: 'yellow'}
@@ -458,5 +556,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run( debug=True)
